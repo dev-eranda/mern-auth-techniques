@@ -13,7 +13,9 @@ export const signup = async (req, res) => {
 
     const userAlreadyExist = await User.findOne({ email });
     if (userAlreadyExist) {
-      res.status(400).json({ success: false, message: "User already exists" });
+      return res
+        .status(400)
+        .json({ success: false, message: "User already exists" });
     }
 
     const hashPassword = await bcryptjs.hash(password, 10); // note: CreateHashPassword
@@ -57,7 +59,7 @@ export const verifyEmail = async (req, res) => {
     });
 
     if (!user) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "Invalid or exripred verification token",
       });
