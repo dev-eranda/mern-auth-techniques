@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import bcryptjs from "bcryptjs";
 import crypto from "crypto";
 import { User } from "../models/user.model.js";
@@ -7,6 +6,7 @@ import {
   sendVerificationEmail,
   sendWelcomeEmail,
   sendPasswordResetEmail,
+  sendPasswordResetSuccessEmail,
 } from "../mailtrap/emails.js";
 
 export const signup = async (req, res) => {
@@ -152,7 +152,7 @@ export const forgotPassword = async (req, res) => {
 
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpiresAt = resetPasswordExpiresAt;
-    user.save();
+    await user.save();
 
     await sendPasswordResetEmail(
       user.email,
@@ -165,6 +165,49 @@ export const forgotPassword = async (req, res) => {
     });
   } catch (error) {
     console.log("error in forgotPassword", error);
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  console.log(token);
+
+  if (!token || !password) {
+    return res
+      .status(400)
+      .json({ success: false, message: "All fields required" });
+  }
+
+  try {
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpiresAt: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or exripred verification token",
+      });
+    }
+
+    const hashPassword = await bcryptjs.hash(password, 10);
+
+    user.password = hashPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpiresAt = undefined;
+    await user.save();
+
+    await sendPasswordResetSuccessEmail(user.email);
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password reset successfully" });
+  } catch (error) {
+    console.log("error in resetPassword", error);
     res.status(400).json({ success: false, message: error.message });
   }
 };
