@@ -1,7 +1,13 @@
+import dotenv from "dotenv";
 import bcryptjs from "bcryptjs";
+import crypto from "crypto";
 import { User } from "../models/user.model.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
-import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js";
+import {
+  sendVerificationEmail,
+  sendWelcomeEmail,
+  sendPasswordResetEmail,
+} from "../mailtrap/emails.js";
 
 export const signup = async (req, res) => {
   try {
@@ -45,7 +51,7 @@ export const signup = async (req, res) => {
     });
   } catch (error) {
     console.log("error in signup", error);
-    res.status(500).json({ success: false, message: error.message });
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
@@ -120,11 +126,45 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.log("Error in login", error);
-    throw new Error(`Error in login: ${error.message}`);
+    res.status(400).json({ success: false, message: error.message });
   }
 };
 
 export const logout = (req, res) => {
   res.clearCookie("token");
   res.status(200).json({ success: true, message: "Logged out successfully" });
+};
+
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
+    }
+
+    const resetToken = crypto.randomBytes(20).toString("hex");
+    const resetPasswordExpiresAt = Date.now() + 1 * 60 * 60 * 1000;
+
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpiresAt = resetPasswordExpiresAt;
+    user.save();
+
+    await sendPasswordResetEmail(
+      user.email,
+      `${process.env.CLIENT_URL}/reset-password/${resetToken}`
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Password reset lint sent to your email",
+    });
+  } catch (error) {
+    console.log("error in forgotPassword", error);
+    res.status(400).json({ success: false, message: error.message });
+  }
 };
