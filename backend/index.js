@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
 import { connectdb } from "./db/connectdb.js";
+import { notFound } from "./middleware/notFound.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config();
 
@@ -14,7 +16,15 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 
-app.listen(PORT, () => {
-  connectdb();
-  console.log("Server is runnig on port", PORT);
+app.use(notFound);
+app.use(errorHandler);
+
+app.listen(PORT, async () => {
+  try {
+    await connectdb();
+    console.log("Server is runnig on port", PORT);
+  } catch (error) {
+    console.error("Failed to start the server:", error.message);
+    process.exit(1);
+  }
 });

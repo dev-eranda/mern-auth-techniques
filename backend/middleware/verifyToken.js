@@ -11,7 +11,7 @@ export const verifyToken = async (req, res, next) => {
       });
     }
 
-    const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded) {
       return res.status(401).json({
         success: false,
@@ -22,7 +22,7 @@ export const verifyToken = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log("Error in verifyToken", error);
-    res.status(500).json({ success: false, message: "Server error" });
+    console.error("Error in verifyToken", error);
+    res.status(401).json({ success: false, message: "Unauthorized" });
   }
 };

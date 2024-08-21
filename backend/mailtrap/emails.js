@@ -22,8 +22,8 @@ export const sendVerificationEmail = async (email, verificationToken) => {
 
     console.log("Email sent successfully", response);
   } catch (error) {
-    console.log("Error sending varification", error.message);
-    throw new Error(`Error sending verification email ${error}`);
+    console.error("Error sending verification email:", error.message);
+    throw new Error(`Error sending verification email: ${error.message}`);
   }
 };
 
@@ -42,8 +42,8 @@ export const sendWelcomeEmail = async (email, name) => {
     });
     console.log("Welcome email sent successfully", response);
   } catch (error) {
-    console.log("Error sending welcome email", error.message);
-    throw new Error(`Error sending welcome email ${error}`);
+    console.error("Error sending welcome email:", error.message);
+    throw new Error(`Error sending welcome email: ${error.message}`);
   }
 };
 
@@ -60,8 +60,8 @@ export const sendPasswordResetEmail = async (email, resetUrl) => {
     });
     console.log("Password reset email sent successfully", response);
   } catch (error) {
-    console.log("Error sending password reset email", error.message);
-    throw new Error(`Error sending password reset email ${error}`);
+    console.error("Error sending password reset email:", error.message);
+    throw new Error(`Error sending password reset email: ${error.message}`);
   }
 };
 
@@ -78,7 +78,9 @@ export const sendPasswordResetSuccessEmail = async (email) => {
     });
     console.log("Reset success email sent successfully", response);
   } catch (error) {
-    console.log("Error sending password reset success email", error.message);
-    throw new Error(`Error sending password reset success email ${error}`);
+    console.error("Error sending password reset success email:", error.message);
+    throw new Error(
+      `Error sending password reset success email: ${error.message}`
+    );
   }
 };

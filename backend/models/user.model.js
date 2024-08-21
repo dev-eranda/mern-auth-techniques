@@ -6,6 +6,8 @@ const userScheema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
+      trim: true,
     },
     password: {
       type: String,
@@ -17,7 +19,7 @@ const userScheema = new mongoose.Schema(
     },
     lastLogin: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
     isVerified: {
       type: Boolean,
@@ -30,5 +32,7 @@ const userScheema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.index({ email: 1 });
 
 export const User = mongoose.model("User", userScheema);

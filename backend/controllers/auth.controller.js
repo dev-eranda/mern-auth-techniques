@@ -14,7 +14,12 @@ export const signup = async (req, res) => {
     const { email, password, name } = req.body;
 
     if (!email || !password || !name) {
-      throw new Error("All fields are required");
+      if (!email || !password || !name) {
+        return res.status(422).json({
+          success: false,
+          message: "All fields are required",
+        });
+      }
     }
 
     const userAlreadyExist = await User.findOne({ email });
@@ -43,15 +48,15 @@ export const signup = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "User created Successfully",
+      message: "User created successfully",
       user: {
         ...user._doc,
         password: undefined,
       },
     });
   } catch (error) {
-    console.log("error in signup", error);
-    res.status(400).json({ success: false, message: error.message });
+    console.error("Error in signup:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 
@@ -65,9 +70,9 @@ export const verifyEmail = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
-        message: "Invalid or exripred verification token",
+        message: "Invalid or expired verification token",
       });
     }
 
@@ -87,7 +92,7 @@ export const verifyEmail = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log("error in verifyEmail", error);
+    console.error("Error in verifyEmail:", error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
@@ -100,14 +105,14 @@ export const login = async (req, res) => {
 
     if (!user) {
       return res
-        .status(400)
+        .status(401)
         .json({ success: false, message: "Invalid credentials" });
     }
 
     const isValidPassword = await bcryptjs.compare(password, user.password);
     if (!isValidPassword) {
       return res
-        .status(400)
+        .status(401)
         .json({ success: false, message: "Invalid credentials" });
     }
 
@@ -118,21 +123,30 @@ export const login = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Logged in successfully ",
+      message: "Logged in successfully",
       user: {
         ...user._doc,
         password: undefined,
       },
     });
   } catch (error) {
-    console.log("Error in login", error);
-    res.status(400).json({ success: false, message: error.message });
+    console.error("Error in login:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 
 export const logout = (req, res) => {
-  res.clearCookie("token");
-  res.status(200).json({ success: true, message: "Logged out successfully" });
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    });
+    res.status(200).json({ success: true, message: "Logged out successfully" });
+  } catch (error) {
+    console.error("error in logout:", error);
+    res.status(500).json({ success: false, message: "Logout failed" });
+  }
 };
 
 export const forgotPassword = async (req, res) => {
@@ -143,7 +157,7 @@ export const forgotPassword = async (req, res) => {
 
     if (!user) {
       return res
-        .status(400)
+        .status(404)
         .json({ success: false, message: "User not found" });
     }
 
@@ -161,11 +175,11 @@ export const forgotPassword = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Password reset lint sent to your email",
+      message: "Password reset link sent to your email",
     });
   } catch (error) {
-    console.log("error in forgotPassword", error);
-    res.status(400).json({ success: false, message: error.message });
+    console.error("error in forgotPassword:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 
@@ -173,12 +187,10 @@ export const resetPassword = async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
 
-  console.log(token);
-
   if (!token || !password) {
     return res
-      .status(400)
-      .json({ success: false, message: "All fields required" });
+      .status(422)
+      .json({ success: false, message: "All fields are required" });
   }
 
   try {
@@ -188,9 +200,9 @@ export const resetPassword = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
-        message: "Invalid or exripred verification token",
+        message: "Invalid or exripred reset token",
       });
     }
 
@@ -207,24 +219,30 @@ export const resetPassword = async (req, res) => {
       .status(200)
       .json({ success: true, message: "Password reset successfully" });
   } catch (error) {
-    console.log("error in resetPassword", error);
-    res.status(400).json({ success: false, message: error.message });
+    console.error("Error in resetPassword:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 
 export const checkAuth = async (req, res) => {
   try {
+    if (!req.userId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User ID is missing" });
+    }
+
     const user = await User.findById(req.userId).select("-password"); // note: unselect password field
 
     if (!user) {
       return res
-        .status(400)
+        .status(404)
         .json({ success: false, message: "User not found" });
     }
 
-    res.status(200).json({ success: true, message: user });
+    res.status(200).json({ success: true, data: user });
   } catch (error) {
-    console.log("error in resetPassword", error);
-    res.status(400).json({ success: false, message: error.message });
+    console.error("Error in checkAuth:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
