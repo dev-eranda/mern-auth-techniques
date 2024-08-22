@@ -1,6 +1,6 @@
 import FloatingShape from "./components/FloatingShape";
-import Signup from "./pages/Signup";
-import Signin from "./pages/Signin";
+import Signup from "./pages/SignUpPage";
+import Signin from "./pages/SignInPage";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
