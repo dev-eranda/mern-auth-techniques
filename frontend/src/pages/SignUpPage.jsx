@@ -1,17 +1,28 @@
 import Input from "../components/Input";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 import { motion } from "framer-motion";
-import { User, Mail, Lock } from "lucide-react";
+import { User, Mail, Lock, Loader } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 const SignUpPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignUp = () => {
+  const { signup, error, isLoading } = useAuthStore();
+  const navigate = useNavigate();
+
+  const handleSignUp = async (e) => {
     e.preventDefault();
+
+    try {
+      await signup(email, password, name);
+      navigate("/verify-email");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -24,7 +35,7 @@ const SignUpPage = () => {
         <h2 className="mb-6 text-3xl font-bold text-center text-transparent bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text">
           Create Account
         </h2>
-        <form onSubmit={handleSignUp}>
+        <form onClick={handleSignUp}>
           <Input
             icon={User}
             type="text"
@@ -41,18 +52,26 @@ const SignUpPage = () => {
           />
           <Input
             icon={Lock}
-            type="text"
+            type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {error && (
+            <span className="mt-2 font-semibold text-red-500">{error}</span>
+          )}
           <PasswordStrengthMeter password={password} />
           <motion.button
             className="w-full px-4 py-3 mt-5 font-bold text-white transition duration-200 rounded-lg shadow-lg bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            type="submit">
-            Sign Up
+            type="submit"
+            disabled={isLoading}>
+            {isLoading ? (
+              <Loader className="mx-auto animate-spin " size={24} />
+            ) : (
+              "Sign Up"
+            )}
           </motion.button>
         </form>
       </div>
