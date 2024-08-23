@@ -1,12 +1,15 @@
+import toast from "react-hot-toast";
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAuthStore } from "../store/authStore";
 
 const EmailVerificationPage = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const navigate = useNavigate();
-  const isLoading = false;
+
+  const { verifyEmail, error, isLoading } = useAuthStore();
 
   const handleChange = (index, value) => {
     const newCode = [...code];
@@ -44,9 +47,9 @@ const EmailVerificationPage = () => {
     e.preventDefault();
     const verificationCode = code.join("");
     try {
-      //   await verifyEmail(verificationCode);
+      await verifyEmail(verificationCode);
       navigate("/");
-      //   toast.success("Email verified successfully");
+      toast.success("Email verified successfully");
     } catch (error) {
       console.log(error);
     }
@@ -89,6 +92,7 @@ const EmailVerificationPage = () => {
               />
             ))}
           </div>
+          {error && <p className="mt-2 font-semibold text-red-500">{error}</p>}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

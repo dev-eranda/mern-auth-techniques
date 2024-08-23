@@ -57,9 +57,7 @@ const SignUpPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {error && (
-            <span className="mt-2 font-semibold text-red-500">{error}</span>
-          )}
+          {error && <p className="mt-2 font-semibold text-red-500">{error}</p>}
           <PasswordStrengthMeter password={password} />
           <motion.button
             className="w-full px-4 py-3 mt-5 font-bold text-white transition duration-200 rounded-lg shadow-lg bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900"
