@@ -3,6 +3,7 @@ import SignUpPage from "./pages/SignUpPage";
 import FloatingShape from "./components/FloatingShape";
 import EmailVerificationPage from "./pages/EmailVerificationPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
+import LoadingSpinner from "./components/LoadingSpinner.jsx";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
@@ -11,13 +12,16 @@ import { useAuthStore } from "./store/authStore.js";
 // info: protected routes that required authenticated
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
+  console.log(user);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  if (!user.isVerified) {
-    return <Navigate to="/verify-email" replace />;
+  if (!user) {
+    if (!user.isVerified) {
+      return <Navigate to="/verify-email" replace />;
+    }
   }
 
   return children;
@@ -27,19 +31,22 @@ const ProtectedRoute = ({ children }) => {
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
 
-  if (isAuthenticated && user.isVerified) {
-    return <Navigate to="/" replace />;
+  if (user !== null) {
+    if (isAuthenticated && user.isVerified) {
+      return <Navigate to="/" replace />;
+    }
   }
-
   return children;
 };
 
 function App() {
-  const { isChecking, checkAuth, isAuthenticated, user } = useAuthStore();
+  const { isChecking, checkAuth } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  if (isChecking) return <LoadingSpinner />;
 
   return (
     <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900">
