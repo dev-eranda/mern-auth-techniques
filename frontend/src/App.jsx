@@ -12,7 +12,6 @@ import { useAuthStore } from "./store/authStore.js";
 // info: protected routes that required authenticated
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
-  console.log(user);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
