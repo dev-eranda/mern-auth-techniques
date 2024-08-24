@@ -115,6 +115,8 @@ function App() {
           }
         />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
+        // note: catch all routes
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
       <Toaster />
