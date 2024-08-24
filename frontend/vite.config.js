@@ -5,6 +5,7 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "public", // or whatever directory you want
+    outDir: "dist", // This is where your build will be output
   },
+  publicDir: "public", // This is your static assets folder
 });
