@@ -5,8 +5,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
 import { connectdb } from "./db/connectdb.js";
-import { notFound } from "./middleware/notFound.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+// import { notFound } from "./middleware/notFound.js";
 
 dotenv.config();
 
@@ -22,7 +22,7 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use("/api/auth", authRoutes);
 
 // app.use(notFound);
-// app.use(errorHandler);
+app.use(errorHandler);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
