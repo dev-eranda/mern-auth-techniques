@@ -3,8 +3,8 @@ import { MailtrapClient } from "mailtrap";
 
 dotenv.config();
 
-const TOKEN = process.env.MAILTRAP_TOKEN;
-const ENDPOINT = process.env.MAILTRAP_ENDPOINT;
+const TOKEN = process.env.MAILTRAP_TOKEN || "";
+const ENDPOINT = process.env.MAILTRAP_ENDPOINT || "";
 
 if (!TOKEN || !ENDPOINT) {
   throw new Error(
