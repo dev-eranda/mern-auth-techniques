@@ -40,4 +40,4 @@ jobs:
           MAILTRAP_TOKEN: ${{ secrets.MAILTRAP_TOKEN }}
           MAILTRAP_ENDPOINT: ${{ secrets.MAILTRAP_ENDPOINT }}
           CLIENT_URL: ${{ secrets.CLIENT_URL }}
-        run: pm2 restart app
+        run: /home/ubuntu/.nvm/versions/node/v20.17.0/bin/pm2 restart app
