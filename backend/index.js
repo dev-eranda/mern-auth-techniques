@@ -21,6 +21,12 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 app.use("/api/auth", authRoutes);
 
+console.log("MONGO:", process.env.MONGO_URI);
+console.log("PORT:", PORT);
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
+console.log("MAILTRAP_TOKEN:", process.env.MAILTRAP_TOKEN);
+console.log("MAILTRAP_ENDPOINT:", process.env.MAILTRAP_ENDPOINT);
+
 // app.use(notFound);
 app.use(errorHandler);
 
