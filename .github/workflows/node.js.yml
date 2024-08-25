@@ -26,24 +26,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      # - name: Print environment variables
-      # - run: |
-      #     touch .env
-      #     echo "MONGO_URI=${{ secrets.MONGO_URI }}"
-      #     echo "PORT=${{ secrets.PORT }}"
-      #     echo "JWT_SECRET=${{ secrets.JWT_SECRET }}"
-      #     echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}"
-      #     echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}"
-
       - run: npm ci
       - run: npm run build
       - run: |
           touch .env
-          echo "${{ secrets.MONGO_URI }}" > .env
-          echo "${{ secrets.PORT }}" > .env
-          echo "${{ secrets.JWT_SECRET }}" > .env
-          echo "${{ secrets.MAILTRAP_TOKEN }}" > .env
-          echo "${{ secrets.MAILTRAP_ENDPOINT }}" > .env
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
+          echo "PORT=${{ secrets.PORT }}" > .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" > .env
+          echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" > .env
+          echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" > .env
 
       - name: Restart application
         run: /home/ubuntu/.nvm/versions/node/v20.17.0/bin/pm2 restart app
