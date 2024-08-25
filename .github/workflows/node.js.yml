@@ -28,12 +28,14 @@ jobs:
 
       - run: npm ci
       - run: npm run build
-      - run: |
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
-          echo "PORT=${{ secrets.PORT }}" > .env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" > .env
-          echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" > .env
-          echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" > .env
+
+      - name: Set up environment variables
+        run: |
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
+          echo "PORT=${{ secrets.PORT }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" >> .env
+          echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" >> .env
 
       - name: Restart application
         run: /home/ubuntu/.nvm/versions/node/v20.17.0/bin/pm2 restart app
