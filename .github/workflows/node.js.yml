@@ -25,12 +25,12 @@ jobs:
     
     - name: Set up environment variables
       run: |
-        echo MONGO_URI="${{ secrets.MONGO_URI }}" > .env
+        echo MONGO_URI=${{ secrets.MONGO_URI }} > .env
         echo PORT=${{ secrets.PORT }} > .env
-        echo JWT_SECRET="${{ secrets.JWT_SECRET }}" >> .env
-        echo MAILTRAP_TOKEN="${{ secrets.MAILTRAP_TOKEN }}" >> .env
-        echo MAILTRAP_ENDPOINT="${{ secrets.MAILTRAP_ENDPOINT }}" >> .env
-        echo CLIENT_URL="${{ secrets.CLIENT_URL }}" >> .env
+        echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+        echo MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }} >> .env
+        echo MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }} >> .env
+        echo CLIENT_URL=${{ secrets.CLIENT_URL }} >> .env
       
     - run: npm ci
     - run: npm run build --if-present
