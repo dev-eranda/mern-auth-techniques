@@ -28,7 +28,6 @@ console.log("MAILTRAP_TOKEN:", process.env.MAILTRAP_TOKEN);
 console.log("MAILTRAP_ENDPOINT:", process.env.MAILTRAP_ENDPOINT);
 
 // app.use(notFound);
-//
 app.use(errorHandler);
 
 if (process.env.NODE_ENV === "production") {
