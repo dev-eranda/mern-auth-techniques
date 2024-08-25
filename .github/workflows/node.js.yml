@@ -31,8 +31,5 @@ jobs:
           echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" >> $GITHUB_ENV
           echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> $GITHUB_ENV
 
-      - name: Check .env file
-        run: cat .env
-
       - run: npm ci
       - run: npm run build
