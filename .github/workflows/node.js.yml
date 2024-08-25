@@ -27,12 +27,9 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build the project
-        run: npm run build
-
-      - name: Restart application
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           PORT: ${{ secrets.PORT }}
@@ -40,4 +37,15 @@ jobs:
           MAILTRAP_TOKEN: ${{ secrets.MAILTRAP_TOKEN }}
           MAILTRAP_ENDPOINT: ${{ secrets.MAILTRAP_ENDPOINT }}
           CLIENT_URL: ${{ secrets.CLIENT_URL }}
+        run: npm run build
+
+      - name: Restart application
         run: /home/ubuntu/.nvm/versions/node/v20.17.0/bin/pm2 restart app
+
+      - name: Print environment variables
+        run: |
+          echo "MONGO_URI=$MONGO_URI"
+          echo "PORT=$PORT"
+          echo "JWT_SECRET=$JWT_SECRET"
+          echo "MAILTRAP_TOKEN=$MAILTRAP_TOKEN"
+          echo "MAILTRAP_ENDPOINT=$MAILTRAP_ENDPOINT"
