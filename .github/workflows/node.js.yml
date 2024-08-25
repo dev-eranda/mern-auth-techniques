@@ -24,12 +24,15 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
-          echo "PORT=${{ secrets.PORT }}" >> $GITHUB_ENV
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
-          echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" >> $GITHUB_ENV
-          echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" >> $GITHUB_ENV
-          echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> $GITHUB_ENV
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
+          echo "PORT=${{ secrets.PORT }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" >> .env
+          echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" >> .env
+          echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> .env
 
       - run: npm ci
       - run: npm run build
+
+      - name: Restart pm2
+        run: pm2 restart app
