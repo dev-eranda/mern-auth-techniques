@@ -33,5 +33,4 @@ jobs:
         echo CLIENT_URL=${{ secrets.CLIENT_URL }} >> .env
       
     - run: npm ci
-    - run: npm run build --if-present
-    - run: npm start
+    - run: npm run build
