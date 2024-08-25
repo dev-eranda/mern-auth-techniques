@@ -23,14 +23,14 @@ jobs:
           cache: "npm"
 
       - name: Set up environment variables
-        run: |
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
-          echo "PORT=${{ secrets.PORT }}" >> .env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
-          echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" >> .env
-          echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" >> .env
-          echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> .env
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          PORT: ${{ secrets.PORT }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          MAILTRAP_TOKEN: ${{ secrets.MAILTRAP_TOKEN }}
+          MAILTRAP_ENDPOINT: ${{ secrets.MAILTRAP_ENDPOINT }}
+          CLIENT_URL: ${{ secrets.CLIENT_URL }}
 
-      - run: npm ci
+      - run: npm install
       - run: npm run build
       # - run: pm2 restart app
