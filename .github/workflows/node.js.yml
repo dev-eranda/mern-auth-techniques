@@ -31,5 +31,8 @@ jobs:
           echo MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }} >> .env
           echo CLIENT_URL=${{ secrets.CLIENT_URL }} >> .env
 
+      - name: Check .env file
+        run: cat .env
+
       - run: npm ci
       - run: npm run build
