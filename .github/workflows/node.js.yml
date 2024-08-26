@@ -38,5 +38,8 @@ jobs:
           echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" >> .env
           echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> .env
 
+      - name: Debug .env file
+        run: cat .env
+
       - name: Restart application
         run: /home/ubuntu/.nvm/versions/node/v20.17.0/bin/pm2 restart app
