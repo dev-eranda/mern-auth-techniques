@@ -35,7 +35,7 @@ const SignUpPage = () => {
         <h2 className="mb-6 text-3xl font-bold text-center text-transparent bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text">
           Create Account
         </h2>
-        <form onClick={handleSignUp}>
+        <form onSubmit={handleSignUp}>
           <Input
             icon={User}
             type="text"
