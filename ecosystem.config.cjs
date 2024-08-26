@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: "app",
-      script: "./backend/index.js",
+      script: "./index.js",
       instances: "max",
       exec_mode: "cluster",
       env: {
