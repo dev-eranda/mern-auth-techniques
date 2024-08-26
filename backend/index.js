@@ -33,7 +33,7 @@ app.use(errorHandler);
 // }
 
 const isProduction = process.env.NODE_ENV;
-const staticDir = isProduction && path.join(__dirname, "../frontend/dist"); // Adjust this path if needed
+const staticDir = isProduction && path.join(__dirname, "frontend/dist"); // Adjust this path if needed
 
 if (isProduction) {
   app.use(express.static(staticDir));

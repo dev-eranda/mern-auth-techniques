@@ -31,13 +31,13 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> backend/.env
-          echo "PORT=${{ secrets.PORT }}" >> backend/.env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> backend/.env
-          echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" >> backend/.env
-          echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" >> backend/.env
-          echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> backend/.env
-          echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> backend/.env
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
+          echo "PORT=${{ secrets.PORT }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" >> .env
+          echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" >> .env
+          echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> .env
+          echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> .env
 
       - name: Restart application
         run: /home/ubuntu/.nvm/versions/node/v20.17.0/bin/pm2 restart app
