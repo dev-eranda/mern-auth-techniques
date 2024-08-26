@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import Input from "../components/Input";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 import { motion } from "framer-motion";
@@ -11,7 +12,7 @@ const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { signup, error, isLoading } = useAuthStore();
+  const { signup, removeCurrentUser, error, isLoading } = useAuthStore();
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
@@ -22,6 +23,18 @@ const SignUpPage = () => {
       navigate("/verify-email");
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleUser = async (e) => {
+    e.preventDefault();
+
+    try {
+      await removeCurrentUser();
+      toast.success("User removed successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("User not found");
     }
   };
 
@@ -78,6 +91,12 @@ const SignUpPage = () => {
           Already have an account?{" "}
           <Link to="/login" className="text-green-400 hover:underline">
             Login
+          </Link>{" "}
+          <Link
+            to="#"
+            onClick={handleUser}
+            className="ml-1 text-red-400 hover:underline">
+            Remove current user
           </Link>
         </p>
       </div>

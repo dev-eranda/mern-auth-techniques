@@ -74,7 +74,7 @@ const PasswordStrengthMeter = ({ password }) => {
             }`}></div>
         ))}
       </div>
-      <PasswordCriteria password={password} />;
+      <PasswordCriteria password={password} />
     </div>
   );
 };

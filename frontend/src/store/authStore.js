@@ -151,4 +151,18 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
+
+  removeCurrentUser: async () => {
+    set({ isLoading: true, error: null, message: null });
+    try {
+      const response = await axios.delete(`${API_URL}/remove-user`);
+      set({ isLoading: false, message: response.data.message });
+    } catch (error) {
+      set({
+        isLoading: false,
+        eerror: error.response.data.message || "Error resetting user",
+      });
+      throw error;
+    }
+  },
 }));

@@ -246,3 +246,22 @@ export const checkAuth = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
+
+export const removeUser = async (req, res) => {
+  try {
+    const result = await User.deleteOne({ email: "dev.mailforuser@gmail.com" });
+
+    if (result.deletedCount === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    res
+      .status(200)
+      .json({ success: true, message: "User removed successfully" });
+  } catch (error) {
+    console.error("Error in removeUser:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
