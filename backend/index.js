@@ -24,14 +24,22 @@ app.use("/api/auth", authRoutes);
 // app.use(notFound);
 app.use(errorHandler);
 
-console.log("NODE-ENV", process.env.NODE_ENV);
-console.log("__dir", __dirname);
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+//   });
+// }
+
+const isProduction = process.env.NODE_ENV;
+const staticDir = isProduction && path.join(__dirname, "../frontend/dist"); // Adjust this path if needed
+
+if (isProduction) {
+  app.use(express.static(staticDir));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+    res.sendFile(path.resolve(staticDir, "index.html"));
   });
 }
 
