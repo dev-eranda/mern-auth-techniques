@@ -24,6 +24,8 @@ app.use("/api/auth", authRoutes);
 // app.use(notFound);
 app.use(errorHandler);
 
+console.log("NODE-ENV", process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
