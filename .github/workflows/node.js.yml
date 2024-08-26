@@ -39,4 +39,5 @@ jobs:
           echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> backend/.env
 
       - name: Restart application
-        run: /home/ubuntu/.nvm/versions/node/v20.17.0/bin/pm2 restart app
+        run: npm start
+        # run: /home/ubuntu/.nvm/versions/node/v20.17.0/bin/pm2 restart app
