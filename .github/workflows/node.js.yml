@@ -37,6 +37,7 @@ jobs:
           echo "MAILTRAP_TOKEN=${{ secrets.MAILTRAP_TOKEN }}" >> backend/.env
           echo "MAILTRAP_ENDPOINT=${{ secrets.MAILTRAP_ENDPOINT }}" >> backend/.env
           echo "CLIENT_URL=${{ secrets.CLIENT_URL }}" >> backend/.env
+          echo "NODE_ENV=${{ secrets.NODE_ENV }}" >> backend/.env
 
       - name: Restart application
         run: /home/ubuntu/.nvm/versions/node/v20.17.0/bin/pm2 restart app
