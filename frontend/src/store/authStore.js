@@ -132,7 +132,6 @@ export const useAuthStore = create((set) => ({
         // error:
         //   error.response.data.message || "Error sending reset password email",
       });
-      // throw error;
     }
   },
 
