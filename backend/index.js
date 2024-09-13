@@ -22,9 +22,10 @@ app.use("/api/auth", authRoutes);
 app.use(errorHandler);
 
 const isProduction = process.env.NODE_ENV;
-const staticDir = isProduction && path.join(__dirname, "frontend/dist"); // info: Adjust this path if needed
+console.log(isProduction);
 
-if (isProduction) {
+if (isProduction === "production") {
+  const staticDir = isProduction && path.join(__dirname, "frontend/dist"); // info: Adjust this path if needed
   app.use(express.static(staticDir));
 
   app.get("*", (req, res) => {

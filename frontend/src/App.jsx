@@ -12,17 +12,17 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuthStore } from "./store/authStore";
 
 // info: protected routes that required authenticated
+// dev.mailforuser@gmail.com
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
+  console.log(user?.isVerified);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  if (!user) {
-    if (!user.isVerified) {
-      return <Navigate to="/verify-email" replace />;
-    }
+  if (!user?.isVerified) {
+    return <Navigate to="/verify-email" replace />;
   }
 
   return children;
@@ -33,7 +33,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
 
   if (user !== null) {
-    if (isAuthenticated && user.isVerified) {
+    if (isAuthenticated && user?.isVerified) {
       return <Navigate to="/" replace />;
     }
   }
