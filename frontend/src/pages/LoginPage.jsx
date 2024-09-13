@@ -1,7 +1,7 @@
 import Input from "../components/Input";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, Loader } from "lucide-react";
 import { useAuthStore } from "../store/authStore";
 
@@ -9,13 +9,18 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, isLoading, error } = useAuthStore();
+  const { login, isLoading, error, user } = useAuthStore();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
       await login(email, password);
+
+      if (!user?.isVerified) {
+        navigate("/verify-email", { replace: true });
+      }
     } catch (error) {
       console.log(error);
     }
