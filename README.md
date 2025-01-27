@@ -25,13 +25,25 @@ Core technologies used:
 ## Configuration
 1. Set up environment variables:
 ```sh
-MONGO_URI=your_mongo_uri
-PORT=5000
-JWT_SECRET=your_secret_key
-NODE_ENV=development
-MAILTRAP_TOKEN=your_mailtrap_token
-MAILTRAP_ENDPOINT=https://send.api.mailtrap.io/
-CLIENT_URL= http://localhost:5173
+# MongoDB Connection URI
+MONGO_URI = mongo_uri
+
+# Application Port
+PORT = 5000
+
+# JWT Secret Key for Authentication
+JWT_SECRET = secret_key
+
+# Environment Mode (development or production)
+NODE_ENV = development
+
+# Mailtrap Configuration for Email Handling
+MAILTRAP_TOKEN = mailtrap_token
+MAILTRAP_ENDPOINT = https://send.api.mailtrap.io/
+
+# Frontend Application URL
+CLIENT_URL = http://localhost:5173
+
 ```
 <hr />
 
