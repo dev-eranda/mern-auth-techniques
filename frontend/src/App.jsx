@@ -1,15 +1,18 @@
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
-import FloatingShape from "./components/FloatingShape";
-import EmailVerificationPage from "./pages/EmailVerificationPage";
-import DashboardPage from "./pages/DashboardPage";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
-import LoadingSpinner from "./components/LoadingSpinner";
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+
+import FloatingShape from "./components/FloatingShape";
+import LoadingSpinner from "./components/LoadingSpinner";
+import DashboardPage from "./pages/DashboardPage";
+import EmailVerificationPage from "./pages/EmailVerificationPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import LoginPage from "./pages/LoginPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import SignUpPage from "./pages/SignUpPage";
+
 import { useAuthStore } from "./store/authStore";
+
 
 // info: protected routes that required authenticated
 // dev.mailforuser@gmail.com
