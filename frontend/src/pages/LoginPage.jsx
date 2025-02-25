@@ -1,13 +1,13 @@
-import Input from "../components/Input";
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { Mail, Lock, Loader } from "lucide-react";
-import { useAuthStore } from "../store/authStore";
+import { motion } from 'framer-motion';
+import { Loader, Lock, Mail } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Input from '../components/Input';
+import { useAuthStore } from '../store/authStore';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const { login, isLoading, error, user } = useAuthStore();
   const navigate = useNavigate();
@@ -17,14 +17,20 @@ const LoginPage = () => {
 
     try {
       await login(email, password);
-
-      if (!user?.isVerified) {
-        navigate("/verify-email", { replace: true });
-      }
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (user !== null) {
+      if (user?.isVerified) {
+        navigate('/dashboard', { replace: true });
+      } else {
+        navigate('/verify-email', { replace: true });
+      }
+    }
+  }, [user, navigate]);
 
   return (
     <motion.div
@@ -52,9 +58,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="flex items-center mb-2">
-            <Link
-              to="/forgot-password"
-              className="text-sm text-green-400 hover:underline">
+            <Link to="/forgot-password" className="text-sm text-green-400 hover:underline">
               Forgot password?
             </Link>
           </div>
@@ -66,17 +70,13 @@ const LoginPage = () => {
             whileTap={{ scale: 0.98 }}
             type="submit"
             disabled={isLoading}>
-            {isLoading ? (
-              <Loader className="w-6 h-6 mx-auto animate-spin" />
-            ) : (
-              "Login"
-            )}
+            {isLoading ? <Loader className="w-6 h-6 mx-auto animate-spin" /> : 'Login'}
           </motion.button>
         </form>
       </div>
       <div className="flex justify-center px-8 py-4 bg-gray-900 bg-opacity-50">
         <p className="text-sm text-gray-400">
-          Don't have an account?{" "}
+          Don't have an account?{' '}
           <Link to="/signup" className="text-green-400 hover:underline">
             Sign up
           </Link>

@@ -1,10 +1,7 @@
-import axios from "axios";
-import { create } from "zustand";
+import axios from 'axios';
+import { create } from 'zustand';
 
-const API_URL =
-  import.meta.env.MODE === "development"
-    ? "http://localhost:5000/api/auth"
-    : "/api/auth";
+const API_URL = import.meta.env.MODE === 'development' ? 'http://localhost:5000/api/auth' : '/api/auth';
 axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
@@ -13,7 +10,7 @@ export const useAuthStore = create((set) => ({
   error: null,
   isLoading: false,
   isChecking: true,
-  message: "",
+  message: '',
 
   signup: async (email, password, name) => {
     set({ isLoading: true, error: null });
@@ -30,7 +27,7 @@ export const useAuthStore = create((set) => ({
       });
     } catch (error) {
       set({
-        error: error.response.data.message || "Error in signup",
+        error: error.response.data.message || 'Error in signup',
         isLoading: false,
       });
       throw error;
@@ -51,7 +48,7 @@ export const useAuthStore = create((set) => ({
       return response.data;
     } catch (error) {
       set({
-        error: error.response.data.message || "Error in verifyEmail",
+        error: error.response.data.message || 'Error in verifyEmail',
         isLoading: false,
       });
       throw error;
@@ -73,7 +70,7 @@ export const useAuthStore = create((set) => ({
       });
     } catch (error) {
       set({
-        error: error.response?.data?.message || "Error in login",
+        error: error.response?.data?.message || 'Error in login',
         isLoading: false,
       });
       throw error;
@@ -112,7 +109,7 @@ export const useAuthStore = create((set) => ({
       });
     } catch (error) {
       set({
-        error: "Error in logout",
+        error: 'Error in logout',
         isLoading: false,
       });
       throw error;
@@ -145,7 +142,7 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
       set({
         isLoading: false,
-        error: error.response.data.message || "Error resetting password",
+        error: error.response.data.message || 'Error resetting password',
       });
       throw error;
     }
@@ -159,7 +156,7 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
       set({
         isLoading: false,
-        eerror: error.response.data.message || "Error resetting user",
+        eerror: error.response.data.message || 'Error resetting user',
       });
       throw error;
     }

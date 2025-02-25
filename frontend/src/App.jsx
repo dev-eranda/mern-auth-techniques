@@ -1,24 +1,22 @@
-import { useEffect } from "react";
-import { Toaster } from "react-hot-toast";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
-import FloatingShape from "./components/FloatingShape";
-import LoadingSpinner from "./components/LoadingSpinner";
-import DashboardPage from "./pages/DashboardPage";
-import EmailVerificationPage from "./pages/EmailVerificationPage";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import LoginPage from "./pages/LoginPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
-import SignUpPage from "./pages/SignUpPage";
+import FloatingShape from './components/FloatingShape';
+import LoadingSpinner from './components/LoadingSpinner';
+import DashboardPage from './pages/DashboardPage';
+import EmailVerificationPage from './pages/EmailVerificationPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import LoginPage from './pages/LoginPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import SignUpPage from './pages/SignUpPage';
 
-import { useAuthStore } from "./store/authStore";
-
+import { useAuthStore } from './store/authStore';
 
 // info: protected routes that required authenticated
 // dev.mailforuser@gmail.com
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
-  console.log(user?.isVerified);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
@@ -34,6 +32,8 @@ const ProtectedRoute = ({ children }) => {
 // info: redirect auth users to home page
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
+
+  //   console.log({ isAuthenticated, user });
 
   if (user !== null) {
     if (isAuthenticated && user?.isVerified) {
@@ -54,27 +54,9 @@ function App() {
 
   return (
     <div className="relative flex items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900">
-      <FloatingShape
-        color="bg-green-500"
-        size="w-64 h-64"
-        top="-5%"
-        left="10%"
-        delay={0}
-      />
-      <FloatingShape
-        color="bg-emerald-500"
-        size="w-48 h-48"
-        top="70%"
-        left="80%"
-        delay={5}
-      />
-      <FloatingShape
-        color="bg-lime-500"
-        size="w-32 h-32"
-        top="40%"
-        left="-10%"
-        delay={2}
-      />
+      <FloatingShape color="bg-green-500" size="w-64 h-64" top="-5%" left="10%" delay={0} />
+      <FloatingShape color="bg-emerald-500" size="w-48 h-48" top="70%" left="80%" delay={5} />
+      <FloatingShape color="bg-lime-500" size="w-32 h-32" top="40%" left="-10%" delay={2} />
 
       <Routes>
         <Route
@@ -117,8 +99,10 @@ function App() {
             </RedirectAuthenticatedUser>
           }
         />
+
         <Route path="/verify-email" element={<EmailVerificationPage />} />
-        // note: catch all routes
+
+        {/* catch all routes */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
