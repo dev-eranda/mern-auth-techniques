@@ -1,9 +1,9 @@
 # MERN advanced authentication
 
-**Developed By:** Eranda Samarasinghe
+**Developed by:** Eranda Samarasinghe
 <hr />
 
-## Project Backgroud and Overview
+## Project Background and Overview
 This repository focuses on full-stack development using the MERN stack. It highlights API security, scalable architecture, and database management, while also implementing advanced 2FA authentication using email OTP. Additionally, it is integrated with CI/CD and deployed on AWS EC2 helping to learn cloud infrastructure and automation
 <hr />
 
@@ -13,7 +13,7 @@ The main objectives of this application are to:
 1. Implemented JWT authentication to secure API endpoints and manage sessions
 2. Built a scalable architecture with modular code using Node.js and Express.js
 3. Used MongoDB for efficient and flexible data storage
-4. Integrated frontend authentication in ReactJS for a smooth user experience
+4. Integrated frontend authentication in React for a smooth user experience
 <hr />
 
 ## Technical Details
