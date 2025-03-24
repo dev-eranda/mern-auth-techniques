@@ -3,11 +3,11 @@
 **Developed By:** Eranda Samarasinghe
 <hr />
 
-## Project Backgroud and Overview
+## Project backgroud and overview
 This repository focuses on back-end and full-stack development using the MERN stack. It highlights API security, scalable architecture, and database management, while also implementing advanced 2FA authentication using email OTP
 <hr />
 
-## Project Goals
+## Project goals
 The main objectives of this application are to:
 
 1. Implemented JWT authentication to secure API endpoints and manage sessions
@@ -16,7 +16,7 @@ The main objectives of this application are to:
 4. Integrated frontend authentication in React.js for a smooth user experience
 <hr />
 
-## Technical Details
+## Technical details
 Core technologies used: 
 
 - **MERN Stack, JWT Authentication**
