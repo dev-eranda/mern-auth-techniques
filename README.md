@@ -4,16 +4,16 @@
 <hr />
 
 ## Project Backgroud and Overview
-Focused on mastering back-end and full-stack development, this secure authentication application was built using the MERN stack. The project emphasizes best practices in API security, scalable architecture, and database management, while also incorporating advanced testing techniques to ensure reliability.
+This repository focuses on back-end and full-stack development using the MERN stack. It highlights API security, scalable architecture, and database management, while also implementing advanced 2FA authentication using email OTP
 <hr />
 
 ## Project Goals
 The main objectives of this application are to:
 
-1. Implementing JWT-based authentication for securing API endpoints and managing user sessions.
-2. Developing a scalable architecture using modular coding patterns with Node.js and Express.js.
-3. Leveraging MongoDB as the primary database for efficient and flexible data storage.
-4. Integrating frontend authentication workflows using React.js to deliver a seamless user experience.
+1. Implemented JWT authentication to secure API endpoints and manage sessions
+2. Built a scalable architecture with modular code using Node.js and Express.js
+3. Used MongoDB for efficient and flexible data storage
+4. Integrated frontend authentication in React.js for a smooth user experience
 <hr />
 
 ## Technical Details
