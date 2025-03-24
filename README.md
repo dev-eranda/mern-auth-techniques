@@ -50,7 +50,7 @@ CLIENT_URL = http://localhost:5173
 ## Installation
 1. Clone repository:
    ```sh
-   git clone https://github.com/dev-eranda/mern-auth-techniques
+   git clone https://github.com/dev-eranda/mern-auth-techniques.git
    
 2. Install dependencies:
    ```sh
