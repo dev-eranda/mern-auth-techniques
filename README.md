@@ -1,4 +1,4 @@
-# MERN Advanced Authentication
+# MERN advanced authentication
 
 **Developed By:** Eranda Samarasinghe
 <hr />
